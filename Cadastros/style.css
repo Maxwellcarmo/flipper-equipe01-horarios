@@ -1,0 +1,318 @@
+/* ==============================================
+   RAIZ (ROOT) - Paleta de Cores
+   Baseado na imagem enviada (laranja/azul)
+   ============================================== */
+:root {
+    /* Paleta baseada na imagem */
+    --cor-primaria-escura: #0D47A1; /* Azul escuro */
+    --cor-primaria: #1976D2;         /* Azul médio */
+    --cor-primaria-clara: #BBDEFB;   /* Azul claro */
+    --cor-destaque: #FF6F00;         /* Laranja escuro */
+    --cor-destaque-claro: #FFCA28;   /* Laranja claro/Amarelo */
+    --cor-fundo: #F5F5F5;            /* Cinza de fundo (do bege) */
+    --cor-fundo-container: #FFFFFF;
+    --cor-texto: #212121;
+    --cor-texto-claro: #757575;
+    --cor-sucesso: #388E3C;
+    --cor-falha: #D32F2F;
+}
+
+/* ==============================================
+   Reset Básico e Estilo Global
+   ============================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: var(--cor-primaria-escura);
+    margin-top: 0;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--cor-fundo);
+    padding-bottom: 8px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.2rem;
+    color: var(--cor-primaria);
+}
+
+p {
+    margin-top: 0;
+}
+
+section {
+    background-color: var(--cor-fundo-container);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+/* ==============================================
+   Navegação Principal (Entre páginas)
+   ============================================== */
+.main-nav {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os links quebrem a linha em telas pequenas */
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: var(--cor-fundo);
+    border-radius: 8px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--cor-primaria);
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+    text-align: center;
+}
+
+.main-nav a:hover {
+    background-color: var(--cor-primaria-clara);
+}
+
+.main-nav a.active {
+    background-color: var(--cor-primaria-escura);
+    color: white;
+}
+
+/* ==============================================
+   Estilos da Página de Distribuição (planilha.html)
+   ============================================== */
+
+/* --- Upload Section --- */
+.upload-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    /* Gradiente Laranja/Amarelo */
+    background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-claro));
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.file-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Esconde o input original */
+input[type="file"] {
+    display: none;
+}
+
+#fileName {
+    font-style: italic;
+    color: var(--cor-texto-claro);
+}
+
+/* --- Log Section --- */
+#logStatus {
+    display: block;
+    width: 100%;
+    height: 250px;
+    background-color: #263238; /* Fundo escuro para log */
+    color: #ECEFF1;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.9rem;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-y: scroll;
+    white-space: pre-wrap; /* Quebra linha no log */
+    border: 1px solid #37474F;
+}
+
+/* --- Cores do Log --- */
+.log-info { color: #81D4FA; } /* Azul claro */
+.log-sucesso { color: #A5D6A7; } /* Verde claro */
+.log-erro { color: #EF9A9A; } /* Vermelho claro */
+.log-aviso { color: #FFE082; } /* Amarelo claro */
+
+
+/* --- Resultado Section --- */
+#resultadoContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    #resultadoContainer {
+        grid-template-columns: 1fr;
+    }
+}
+
+#sucesso {
+    border-left: 4px solid var(--cor-sucesso);
+    padding-left: 15px;
+}
+
+#falha {
+    border-left: 4px solid var(--cor-falha);
+    padding-left: 15px;
+}
+
+.resultado-lista {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.alocacao {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    position: relative;
+}
+
+.alocacao-sucesso {
+    background-color: #E8F5E9; /* Fundo verde claro */
+    border: 1px solid #C8E6C9;
+}
+
+.alocacao-falha {
+    background-color: #FFEBEE; /* Fundo vermelho claro */
+    border: 1px solid #FFCDD2;
+}
+
+.alocacao strong {
+    color: var(--cor-texto);
+    font-weight: 600;
+}
+
+/* ==============================================
+   Estilos das Páginas de Cadastro
+   (cadastro-salas.html, cadastro-turmas.html)
+   ============================================== */
+.form-cadastro {
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-cadastro input[type="text"],
+.form-cadastro input[type="number"],
+.form-cadastro select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #BDBDBD;
+    border-radius: 6px;
+    background-color: #FAFAFA;
+}
+
+.form-cadastro input:focus,
+.form-cadastro select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 2px var(--cor-primaria-clara);
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    font-size: 0.95rem;
+}
+
+/* Botão de submit do formulário */
+.form-cadastro button[type="submit"] {
+    /* O estilo de gradiente .file-label será aplicado
+       automaticamente se a classe 'file-label' for usada no HTML */
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-claro));
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-cadastro button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Botão de Excluir */
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--cor-falha);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 28px;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #C62828; /* Vermelho mais escuro */
+}
+
+/* Ajusta o padding para o botão não sobrepor */
+.alocacao div {
+    padding-right: 35px;
+}

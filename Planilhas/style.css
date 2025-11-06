@@ -1,0 +1,163 @@
+/* --- Configurações Globais (Nova Paleta) --- */
+:root {
+    /* Paleta Principal (Azuis) */
+    --cor-primaria: #34495E; /* Azul Escuro (Headers, Texto) */
+    --cor-secundaria: #5DADE2; /* Azul Médio (Sucesso) */
+    --cor-borda: #AED6F1;     /* Azul Claro (Bordas) */
+
+    /* Paleta de Ação (Laranjas) */
+    --cor-acao-1: #EB984E;    /* Laranja Médio (Botão) */
+    --cor-acao-2: #D35400;    /* Laranja Escuro (Botão Hover, Falha) */
+
+    /* Paleta Neutra */
+    --cor-fundo: #F2F3F4;     /* Cinza Claro (Fundo da Página) */
+    --cor-caixa: #FFFFFF;     /* Branco (Fundo das Caixas) */
+    --cor-texto: #34495E;     /* Azul Escuro (Texto) */
+
+    /* Paleta de Feedback */
+    --cor-sucesso: var(--cor-secundaria); /* #5DADE2 */
+    --cor-falha: var(--cor-acao-2);     /* #D35400 */
+    
+    /* Fundos das caixas de resultado */
+    --cor-sucesso-fundo: #eaf5fc; /* Um tom de azul BEM claro, derivado de #AED6F1 */
+    --cor-falha-fundo: #FDEBD0;   /* O Bege/Laranja claro da paleta */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    margin: 0;
+    padding: 20px;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: var(--cor-caixa);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+header {
+    border-bottom: 2px solid var(--cor-borda);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: var(--cor-primaria);
+    margin: 0;
+}
+
+h2 {
+    color: var(--cor-primaria);
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+/* --- Seção de Upload (Botão com Gradiente) --- */
+.upload-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Esconde o input original */
+input[type="file"] {
+    display: none;
+}
+
+/* Estiliza o label como um botão com gradiente */
+.file-label {
+    background: linear-gradient(145deg, var(--cor-acao-1), var(--cor-acao-2));
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3); /* Sombra laranja */
+}
+
+.file-label:hover {
+    background: linear-gradient(145deg, var(--cor-acao-2), var(--cor-acao-1));
+    box-shadow: 0 6px 15px rgba(211, 84, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+#fileName {
+    color: #555;
+    font-style: italic;
+}
+
+/* --- Seção de Log --- */
+.log-section pre {
+    background-color: #2d2d2d; /* Mantendo o log escuro para contraste */
+    color: #f4f4f4;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    max-height: 250px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.9em;
+}
+
+.log-info { color: #80caff; }
+.log-sucesso { color: #7fef7f; }
+.log-erro { color: #ff8b8b; }
+.log-aviso { color: #ffd700; }
+
+/* --- Seção de Resultados --- */
+#resultadoContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.resultado-lista {
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    padding: 20px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+#sucesso h3 { color: var(--cor-sucesso); }
+#falha h3 { color: var(--cor-falha); }
+
+.alocacao {
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+.alocacao-sucesso {
+    background-color: var(--cor-sucesso-fundo);
+    border-left: 4px solid var(--cor-sucesso);
+}
+
+.alocacao-falha {
+    background-color: var(--cor-falha-fundo);
+    border-left: 4px solid var(--cor-falha);
+}
+
+.alocacao strong {
+    font-weight: 600;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 800px) {
+    #resultadoContainer {
+        grid-template-columns: 1fr;
+    }
+}

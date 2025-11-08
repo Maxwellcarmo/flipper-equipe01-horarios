@@ -41,9 +41,10 @@
         </section>
 
         <section>
-            <h2>Salas Cadastradas no Banco de Dados</h2>
+            <h2>Salas Cadastradas no Armazenamento Local</h2>
             <div id="lista-salas-container" class="resultado-lista">
-                <p>Carregando salas do Firebase...</p>
+                <!-- MUDANÇA 1: Texto atualizado -->
+                <p>Carregando salas salvas...</p>
             </div>
         </section>
 
@@ -87,13 +88,19 @@
         <section>
             <h2>Turmas Manuais Cadastradas</h2>
             <div id="lista-turmas-container" class="resultado-lista">
-                <p>Carregando turmas do Firebase...</p>
+                <!-- MUDANÇA 1: Texto atualizado -->
+                <p>Carregando turmas salvas...</p>
             </div>
         </section>
         
     </main>
     
-    <script type="module" src="cadastros.js"></script>
+    <!-- 
+      MUDANÇA 2: Removido o 'type="module"'
+      Isso faz com que o script seja carregado como um script normal,
+      removendo a necessidade de um servidor (Live Server).
+    -->
+    <script src="script.js"></script>
 
 </body>
 </html>

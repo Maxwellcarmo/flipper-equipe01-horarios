@@ -1,41 +1,14 @@
 /* ========================================================================
  * BANCO DE DADOS DE SALAS (OFERTA)
- * Este é o "Inventário" de salas físicas.
- * O sistema irá automaticamente transformar isso em "slots" de tempo.
- * (ex: A101 -> A101-Seg-Manha, A101-Seg-Tarde, A101-Seg-Noite, ...)
- *
- * Propriedade importante:
- * - usarParaAlocacao: (true/false)
- * - `false` bloqueia a sala (ex: Auditórios, salas de coordenação, em reforma)
+ * REMOVIDO!
+ * A constante DATABASE_SALAS foi removida.
+ * Os dados agora vêm do LocalStorage (da página de Cadastros).
  * ========================================================================
  */
-const DATABASE_SALAS = [
-    // --- Bloco A (Ex: Humanas) ---
-    { id: "A101", bloco: "A", capacidade: 50, tipo: "Normal", usarParaAlocacao: true },
-    { id: "A102", bloco: "A", capacidade: 50, tipo: "Normal", usarParaAlocacao: true },
-    { id: "A103", bloco: "A", capacidade: 80, tipo: "Normal", usarParaAlocacao: true },
-    { id: "A104 (Lab)", bloco: "A", capacidade: 30, tipo: "Laboratorio", usarParaAlocacao: true },
-    { id: "A105 (Coord)", bloco: "A", capacidade: 20, tipo: "Normal", usarParaAlocacao: false }, // BLOQUEADA
 
-    // --- Bloco B ---
-    { id: "B201", bloco: "B", capacidade: 60, tipo: "Normal", usarParaAlocacao: true },
-    { id: "B202", bloco: "B", capacidade: 60, tipo: "Normal", usarParaAlocacao: true },
+// --- Chave do LocalStorage (DEVE ser a mesma do cadastros.js) ---
+const SALAS_KEY = 'minhasSalas';
 
-    // --- Bloco C (Ex: Exatas) ---
-    { id: "C301", bloco: "C", capacidade: 70, tipo: "Normal", usarParaAlocacao: true },
-    { id: "C302", bloco: "C", capacidade: 70, tipo: "Normal", usarParaAlocacao: true },
-    { id: "C303 (Lab)", bloco: "C", capacidade: 40, tipo: "Laboratorio", usarParaAlocacao: true },
-    { id: "C304 (Lab)", bloco: "C", capacidade: 40, tipo: "Laboratorio", usarParaAlocacao: true },
-
-    // --- Bloco D / E ---
-    { id: "D101 (Auditório)", bloco: "D", capacidade: 300, tipo: "Normal", usarParaAlocacao: false }, // BLOQUEADO
-    { id: "E101", bloco: "E", capacidade: 50, tipo: "Normal", usarParaAlocacao: true },
-
-    // --- Bloco G (Ex: Odonto) ---
-    { id: "G101 (Lab)", bloco: "G", capacidade: 30, tipo: "Laboratorio", usarParaAlocacao: true },
-    { id: "G102 (Lab)", bloco: "G", capacidade: 30, tipo: "Laboratorio", usarParaAlocacao: true },
-    { id: "G103", bloco: "G", capacidade: 60, tipo: "Normal", usarParaAlocacao: true },
-];
 
 // --- Constantes do Sistema de Horário ---
 // Mapeia os dias da planilha para os nossos dias
@@ -141,9 +114,20 @@ function csvParaJSON(csvText) {
     return resultado;
 }
 
+/**
+ * NOVA FUNÇÃO: Busca as salas do Armazenamento Local
+ * (a "gaveta" onde o cadastros.js está salvando)
+ */
+function fetchSalasDoLocalStorage() {
+    const salasJSON = localStorage.getItem(SALAS_KEY);
+    const salas = JSON.parse(salasJSON) || [];
+    return salas;
+}
+
 
 /**
  * Orquestra todo o processo de distribuição
+ * (MODIFICADO para ler do LocalStorage)
  */
 function iniciarDistribuicao(turmasCSV) {
     // 1. Processar e Limpar os dados ("Demanda")
@@ -154,11 +138,26 @@ function iniciarDistribuicao(turmasCSV) {
     const gruposDeTurmas = agruparTurmas(turmasProcessadas);
     log(`Turmas agrupadas para junção. Total de ${gruposDeTurmas.length} alocações necessárias.`);
 
-    // 3. Preparar as salas ("Oferta")
+    // =========================================================
+    // 3. Preparar as salas ("Oferta") - MODIFICADO
+    log("Buscando salas salvas no Armazenamento Local...");
+    
+    // Puxa as salas do LocalStorage (em vez de usar a constante)
+    const databaseSalas = fetchSalasDoLocalStorage(); 
+
+    // Verifica se há salas cadastradas
+    if (databaseSalas.length === 0) {
+        log("ERRO CRÍTICO: Nenhuma sala encontrada no Armazenamento Local.", 'erro');
+        log("Vá para a página 'Gerenciamento (Cadastros)' e cadastre algumas salas primeiro.", 'erro');
+        return; // Para a execução
+    }
+    log(`${databaseSalas.length} salas locais (cadastradas) encontradas.`);
+
     // Gera "Slots" (Sala-Dia-Turno)
-    let slotsDisponiveis = gerarSlotsDisponiveis(DATABASE_SALAS);
-    const salasBloqueadas = DATABASE_SALAS.filter(s => s.usarParaAlocacao === false).length;
-    log(`${slotsDisponiveis.length} SLOTS disponíveis para alocação (de ${DATABASE_SALAS.length} salas físicas, ${salasBloqueadas} bloqueadas).`);
+    let slotsDisponiveis = gerarSlotsDisponiveis(databaseSalas);
+    const salasBloqueadas = databaseSalas.filter(s => s.usarParaAlocacao === false).length;
+    log(`${slotsDisponiveis.length} SLOTS disponíveis para alocação (de ${databaseSalas.length} salas físicas, ${salasBloqueadas} bloqueadas).`);
+    // =========================================================
 
     // 4. Executar o algoritmo de alocação
     const { alocacoes, falhas } = alocarGrupos(gruposDeTurmas, slotsDisponiveis);
@@ -169,6 +168,7 @@ function iniciarDistribuicao(turmasCSV) {
 
 /**
  * Gera o "inventário" de slots (Sala-Dia-Turno)
+ * (Esta função não muda, ela já recebia a lista de salas)
  */
 function gerarSlotsDisponiveis(salasFisicas) {
     const slots = [];
@@ -225,8 +225,8 @@ function processarTurmas(turmasCSV) {
             alunos: alunos,
             tipoNecessario: tipoNecessario,
             blocoDesejado: blocoDesejado,
-            dia: dia,   // ex: 'Sex'
-            turno: turno  // ex: 'N'
+            dia: dia,  // ex: 'Sex'
+            turno: turno // ex: 'N'
         };
     }).filter(turma => {
         // Filtra turmas sem alunos ou sem horário definido
@@ -295,7 +295,6 @@ function alocarGrupos(gruposDeTurmas, slotsDisponiveis) {
     let falhas = [];
 
     // Fila de grupos para alocar (MAIOR para o MENOR)
-    // Isso é crucial para que as turmas grandes peguem as salas grandes primeiro
     let gruposParaAlocar = gruposDeTurmas.sort((a, b) => b.totalAlunos - a.totalAlunos);
 
     let iteracao = 0;
@@ -308,15 +307,10 @@ function alocarGrupos(gruposDeTurmas, slotsDisponiveis) {
 
         // 1. Encontra todos os SLOTS que PODEM receber o grupo
         const candidatos = slotsDisponiveis.filter(slot => {
-            // Regra 1: Capacidade
             const temCapacidade = slot.capacidade >= grupo.totalAlunos;
-            // Regra 2: Tipo de Sala (Normal vs Lab)
             const tipoCorreto = slot.tipo === grupo.tipoNecessario;
-            // Regra 3: Bloco (Se o grupo exigir um, a sala deve bater)
             const blocoCorreto = !grupo.blocoDesejado || (slot.bloco === grupo.blocoDesejado);
-            // Regra 4: Dia (ex: 'Sex' === 'Sex')
             const diaCorreto = slot.dia === grupo.dia;
-            // Regra 5: Turno (ex: 'N' === 'N')
             const turnoCorreto = slot.turno === grupo.turno;
             
             return temCapacidade && tipoCorreto && blocoCorreto && diaCorreto && turnoCorreto;
@@ -347,7 +341,7 @@ function alocarGrupos(gruposDeTurmas, slotsDisponiveis) {
                     const turnoCorreto = slot.turno === grupo.turno;
                     return tipoCorreto && blocoCorreto && diaCorreto && turnoCorreto; // Ignora capacidade
                 })
-                .sort((a, b) => b.capacidade - a.capacity); // Pega o maior
+                .sort((a, b) => b.capacidade - a.capacidade); // Pega o maior (Havia um 'capacity' aqui, corrigi para 'capacidade')
             
             if (maiorSlotCompativelLista.length > 0) {
                 const slotParaDividir = maiorSlotCompativelLista[0]; // Pega o maior slot compatível
@@ -411,7 +405,7 @@ function inserirOrdenado(lista, item) {
  * Exibe o dia e turno da alocação
  */
 function exibirResultados(alocacoes, falhas) {
-    log(`Processo concluído. ${alocacoes.length} alocações com sucesso, ${falhas.length} falhas.`);
+    log(`Processo concluído. ${alocacoes.length} alocações com sucesso, ${falhas.length} falhas.`, 'sucesso');
 
     // Exibe Sucessos
     sucessoContainer.innerHTML = alocacoes.map(item => {
@@ -463,7 +457,7 @@ function limparResultados() {
     logStatus.innerHTML = '';
     sucessoContainer.innerHTML = '';
     falhaContainer.innerHTML = '';
-    fileNameSpan.textContent = 'Nenhum arquivo selecionado';
+    // Não limpa o nome do arquivo, para o usuário saber qual arquivo foi processado
 }
 
 function log(mensagem, tipo = 'info') {

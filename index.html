@@ -4,21 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Flipper - Equipe 01</title>
+    
+    <!-- CSS embutido para o menu -->
     <style>
-        body { font-family: sans-serif; margin: 40px; }
-        h1 { color: #333; }
-        a { font-size: 1.2em; margin-right: 20px; }
+        /* * Paleta de cores baseada na sua print
+         */
+        :root {
+            --cor-primaria-escura: #0D47A1; /* Azul escuro */
+            --cor-primaria: #1976D2;         /* Azul médio */
+            --cor-fundo: #F5F5F5;            /* Cinza de fundo */
+            --cor-fundo-container: #FFFFFF;
+            --cor-texto: #212121;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            margin: 0;
+            line-height: 1.6;
+
+            /* Centraliza o card na tela */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* * Card principal que segura o conteúdo 
+         */
+        .card {
+            background-color: var(--cor-fundo-container);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center; /* Centraliza a logo e o texto */
+        }
+
+        /* * Estilo da Logo 
+         */
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Deixa a logo redonda */
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--cor-primaria-escura);
+        }
+
+        h1 {
+            color: var(--cor-primaria-escura);
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        /* * Esconde o <p> original, pois o H1 já explica
+         */
+        body > p {
+            display: none;
+        }
+
+        /* * Container dos botões
+         */
+        nav {
+            display: flex;
+            flex-direction: column; /* Empilha os botões */
+            gap: 15px; /* Espaço entre os botões */
+        }
+
+        /* * Estilo dos links como botões
+         * (baseado no .main-nav a.active da sua outra página)
+         */
+        nav a {
+            display: block; /* Faz o link ocupar a largura toda */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 12px 20px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            
+            /* Estilo principal (botão azul) */
+            background-color: var(--cor-primaria-escura);
+            color: white;
+        }
+
+        /* * Efeito de Hover (passar o mouse)
+         */
+        nav a:hover {
+            background-color: var(--cor-primaria);
+            transform: translateY(-2px); /* Efeito de "levantar" */
+        }
     </style>
 </head>
 <body>
-    <h1>Projeto Flipper - Equipe 01</h1>
-    <p>Links para as páginas do projeto:</p>
-    
-    <nav>
-        <a href="./Cadastros/cadastros.html">Página de Cadastros</a>
+
+    <!-- 
+      Usei a tag <main> para ser o "card"
+    -->
+    <main class="card">
         
-        <a href="./Planilhas/planilha.html">Página de Planilhas</a>
-    </nav>
+        <!-- 
+          LOGO 
+          IMPORTANTE: O arquivo "logo.jpg" deve estar na mesma pasta
+          deste arquivo index.html
+        -->
+        <img src="logo.jpg" 
+             alt="Logo Flipper" 
+             class="logo"
+             onerror="this.src='https://placehold.co/120x120/0D47A1/FFFFFF?text=LOGO'; this.onerror=null;">
+
+        <h1>Projeto Flipper - Equipe 01</h1>
+        
+        <nav>
+            <!-- 
+              Mudei o texto dos links para ficar igual ao
+              cabeçalho das outras páginas, para manter o padrão.
+            -->
+            <a href="./Cadastros/cadastros.html">Gerenciamento (Cadastros)</a>
+            <a href="./Planilhas/planilha.html">Distribuição (Planilha)</a>
+        </nav>
+    
+    </main>
 
 </body>
 </html>

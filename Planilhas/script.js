@@ -225,7 +225,7 @@ function processarTurmas(turmasCSV) {
             alunos: alunos,
             tipoNecessario: tipoNecessario,
             blocoDesejado: blocoDesejado,
-            dia: dia,     // ex: 'Sex'
+            dia: dia,   // ex: 'Sex'
             turno: turno  // ex: 'N'
         };
     }).filter(turma => {
@@ -347,7 +347,7 @@ function alocarGrupos(gruposDeTurmas, slotsDisponiveis) {
                     const turnoCorreto = slot.turno === grupo.turno;
                     return tipoCorreto && blocoCorreto && diaCorreto && turnoCorreto; // Ignora capacidade
                 })
-                .sort((a, b) => b.capacidade - a.capacidade); // Pega o maior
+                .sort((a, b) => b.capacidade - a.capacity); // Pega o maior
             
             if (maiorSlotCompativelLista.length > 0) {
                 const slotParaDividir = maiorSlotCompativelLista[0]; // Pega o maior slot compatível

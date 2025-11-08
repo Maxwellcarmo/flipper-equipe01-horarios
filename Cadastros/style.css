@@ -1,7 +1,7 @@
 /* ==============================================
-   RAIZ (ROOT) - Paleta de Cores
-   Baseado na imagem enviada (laranja/azul)
-   ============================================== */
+    RAIZ (ROOT) - Paleta de Cores
+    Baseado na imagem enviada (laranja/azul)
+    ============================================== */
 :root {
     /* Paleta baseada na imagem */
     --cor-primaria-escura: #0D47A1; /* Azul escuro */
@@ -18,8 +18,8 @@
 }
 
 /* ==============================================
-   Reset Básico e Estilo Global
-   ============================================== */
+    Reset Básico e Estilo Global
+    ============================================== */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -76,8 +76,8 @@ section {
 }
 
 /* ==============================================
-   Navegação Principal (Entre páginas)
-   ============================================== */
+    Navegação Principal (Entre páginas)
+    ============================================== */
 .main-nav {
     display: flex;
     flex-wrap: wrap; /* Permite que os links quebrem a linha em telas pequenas */
@@ -108,8 +108,13 @@ section {
 }
 
 /* ==============================================
-   Estilos da Página de Distribuição (planilha.html)
-   ============================================== */
+    REMOVIDO - Navegação das Abas (Salas / Turmas)
+    Não é mais necessário.
+    ============================================== */
+
+/* ==============================================
+    Estilos da Página de Distribuição (planilha.html)
+    ============================================== */
 
 /* --- Upload Section --- */
 .upload-section {
@@ -227,19 +232,35 @@ input[type="file"] {
 }
 
 /* ==============================================
-   Estilos das Páginas de Cadastro
-   (cadastro-salas.html, cadastro-turmas.html)
-   ============================================== */
+    Estilos das Páginas de Cadastro
+    (cadastro-salas.html, cadastro-turmas.html)
+    ============================================== */
 .form-cadastro {
     margin-bottom: 20px;
 }
 
+/* Regra geral para grids */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
 }
+
+/* CORREÇÃO DO LAYOUT "TORTO"
+  Cria uma regra específica para o grid do form de salas
+  para ter 2 colunas.
+*/
+#form-cadastro-sala .form-grid {
+    grid-template-columns: 1fr 1fr; /* 2 colunas */
+    align-items: center; /* Alinha os itens verticalmente */
+}
+
+/* Faz o checkbox ocupar as 2 colunas */
+#form-cadastro-sala .form-checkbox {
+    grid-column: 1 / -1; /* Ocupa do início ao fim */
+}
+
 
 .form-cadastro input[type="text"],
 .form-cadastro input[type="number"],

@@ -4,34 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Distribuição de Salas</title>
-    <!-- 1. Link para o seu arquivo CSS -->
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="../Cadastros/style.css">
 </head>
 <body>
 
     <main>
         <header>
-            <h1>Sistema de Distribuição de Salas</h1>
+            <h1>Gerenciamento</h1>
+            <nav class="main-nav">
+                <a href="planilha.html" class="active">Distribuição (Planilha)</a>
+                <a href="../Cadastros/cadastros.html">Gerenciamento (Cadastros)</a>
+            </nav>
         </header>
 
-        <!-- Seção de Upload -->
         <section class="upload-section">
-            <!-- O <label> é estilizado como um botão -->
             <label for="arquivoCSV" class="file-label">Escolher arquivo CSV</label>
-            
-            <!-- O <input> real fica escondido -->
             <input type="file" id="arquivoCSV" accept=".csv">
-            
             <span id="fileName">Nenhum arquivo selecionado</span>
         </section>
 
-        <!-- Seção de Log (Console) -->
         <section class="log-section">
             <h2>Log de Processamento</h2>
             <pre id="logStatus"></pre>
         </section>
 
-        <!-- Seção de Resultados -->
         <section>
             <h2>Resultados da Alocação</h2>
             
@@ -39,22 +36,19 @@
                 <div id="sucesso">
                     <h3>Alocações com Sucesso</h3>
                     <div class="resultado-lista" id="sucessoContainer">
-                        <!-- Resultados de sucesso irão aqui -->
-                    </div>
+                        </div>
                 </div>
                 
                 <div id="falha">
                     <h3>Turmas que Falharam</h3>
                     <div class="resultado-lista" id="falhaContainer">
-                        <!-- Falhas irão aqui -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </section>
 
     </main>
     
-    <!-- 2. Link para o seu arquivo JavaScript (no final do body) -->
     <script src="script.js"></script>
 </body>
 </html>

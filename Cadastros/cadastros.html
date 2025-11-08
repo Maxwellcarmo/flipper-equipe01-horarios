@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento - Salas e Turmas</title>
-    <!-- 1. Link para o seu CSS unificado -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,163 +11,88 @@
     <main>
         <header>
             <h1>Gerenciamento</h1>
-            <!-- Navegação entre as páginas -->
             <nav class="main-nav">
-                <a href="planilha.html">Distribuição (Planilha)</a>
+                <a href="../Planilhas/planilha.html">Distribuição (Planilha)</a>
                 <a href="cadastros.html" class="active">Gerenciamento (Cadastros)</a>
             </nav>
         </header>
 
-        <!-- ============================================== -->
-        <!-- ABAS DE NAVEGAÇÃO (Salas / Turmas)           -->
-        <!-- ============================================== -->
-        <nav class="tab-nav">
-            <button type_="button" class="tab-button active" data-tab="tab-salas">
-                Gerir Salas
-            </button>
-            <button type="button" class="tab-button" data-tab="tab-turmas">
-                Gerir Turmas
-            </button>
-        </nav>
+        <section class="log-section">
+            <h2>Cadastrar Nova Sala</h2>
+            <form id="form-cadastro-sala" class="form-cadastro">
+                <div class="form-grid">
+                    <input type="text" id="sala-id" placeholder="ID da Sala (ex: A101)" required>
+                    <input type="text" id="sala-bloco" placeholder="Bloco (ex: A)" required>
+                    <input type="number" id="sala-capacidade" placeholder="Capacidade" required>
+                    
+                    <select id="sala-tipo" required>
+                        <option value="" disabled selected>Tipo de Sala</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Laboratorio">Laboratório</option>
+                    </select>
 
-        <!-- ============================================== -->
-        <!-- CONTEÚDO DAS ABAS                            -->
-        <!-- ============================================== -->
-
-        <!-- ABA 1: GERENCIAMENTO DE SALAS (Conteúdo do seu cadastro-salas.html) -->
-        <div id="tab-salas" class="tab-content active">
-            <!-- Seção de Cadastro de Salas -->
-            <section class="log-section">
-                <h2>Cadastrar Nova Sala</h2>
-                <form id="form-cadastro-sala" class="form-cadastro">
-                    <div class="form-grid">
-                        <input type="text" id="sala-id" placeholder="ID da Sala (ex: A101)" required>
-                        <input type="text" id="sala-bloco" placeholder="Bloco (ex: A)" required>
-                        <input type="number" id="sala-capacidade" placeholder="Capacidade" required>
-                        
-                        <select id="sala-tipo" required>
-                            <option value="" disabled selected>Tipo de Sala</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Laboratorio">Laboratório</option>
-                        </select>
-
-                        <label class="form-checkbox">
-                            <input type="checkbox" id="sala-usar" checked>
-                            Ativa para alocação? (Desmarque para Auditórios, etc.)
-                        </label>
-                    </div>
-                    <button type="submit" class="file-label">Salvar Sala</button>
-                </form>
-            </section>
-
-            <!-- Seção de Salas Cadastradas -->
-            <section>
-                <h2>Salas Cadastradas no Banco de Dados</h2>
-                <div id="lista-salas-container" class="resultado-lista">
-                    <p>Carregando salas do Firebase...</p>
+                    <label class="form-checkbox">
+                        <input type="checkbox" id="sala-usar" checked>
+                        Ativa para alocação? (Desmarque para Auditórios, etc.)
+                    </label>
                 </div>
-            </section>
-        </div>
+                <button type="submit" class="file-label">Salvar Sala</button>
+            </form>
+        </section>
 
-        <!-- ABA 2: GERENCIAMENTO DE TURMAS (Conteúdo do seu cadastro-turmas.html) -->
-        <div id="tab-turmas" class="tab-content">
-            <!-- Seção de Cadastro de Turmas -->
-            <section class="log-section">
-                <h2>Cadastrar Nova Turma Manualmente</h2>
-                <form id="form-cadastro-turma" class="form-cadastro">
-                    <div class="form-grid" style="grid-template-columns: 2fr 1fr 1fr;">
-                        <!-- Linha 1 -->
-                        <input type="text" id="turma-disciplina" placeholder="Nome da Disciplina" required>
-                        <input type="text" id="turma-cod-disciplina" placeholder="Cód. Disciplina (para junção)" required>
-                        <input type="number" id="turma-alunos" placeholder="Nº de Alunos" required>
-                        
-                        <!-- Linha 2 -->
-                        <select id="turma-tipo" required>
-                            <option value="" disabled selected>Tipo (Normal ou Lab)</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Laboratorio">Laboratório</option>
-                        </select>
-                        <input type="text" id="turma-bloco" placeholder="Bloco (Opcional, ex: A)">
-                        
-                        <!-- Linha 3 -->
-                        <select id="turma-dia" required>
-                            <option value="" disabled selected>Dia da Semana</option>
-                            <option value="Seg">Segunda</option>
-                            <option value="Ter">Terça</option>
-                            <option value="Qua">Quarta</option>
-                            <option value="Qui">Quinta</option>
-                            <option value="Sex">Sexta</option>
-                            <option value="Sab">Sábado</option>
-                            <option value="Dom">Domingo</option>
-                        </select>
-                        <select id="turma-turno" required>
-                            <option value="" disabled selected>Turno</option>
-                            <option value="M">Manhã</option>
-                            <option value="T">Tarde</option>
-                            <option value="N">Noite</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="file-label">Salvar Turma</button>
-                </form>
-            </section>
+        <section>
+            <h2>Salas Cadastradas no Banco de Dados</h2>
+            <div id="lista-salas-container" class="resultado-lista">
+                <p>Carregando salas do Firebase...</p>
+            </div>
+        </section>
 
-            <!-- Seção de Turmas Cadastradas -->
-            <section>
-                <h2>Turmas Manuais Cadastradas</h2>
-                <div id="lista-turmas-container" class="resultado-lista">
-                    <p>Carregando turmas do Firebase...</p>
+        <section class="log-section">
+            <h2>Cadastrar Nova Turma Manualmente</h2>
+            <form id="form-cadastro-turma" class="form-cadastro">
+                <div class="form-grid" style="grid-template-columns: 2fr 1fr 1fr;">
+                    
+                    <input type="text" id="turma-disciplina" placeholder="Nome da Disciplina" required>
+                    <input type="text" id="turma-cod-disciplina" placeholder="Cód. Disciplina (para junção)" required>
+                    <input type="number" id="turma-alunos" placeholder="Nº de Alunos" required>
+                    
+                    <select id="turma-tipo" required>
+                        <option value="" disabled selected>Tipo (Normal ou Lab)</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Laboratorio">Laboratório</option>
+                    </select>
+                    <input type="text" id="turma-bloco" placeholder="Bloco (Opcional, ex: A)">
+                    
+                    <select id="turma-dia" required>
+                        <option value="" disabled selected>Dia da Semana</option>
+                        <option value="Seg">Segunda</option>
+                        <option value="Ter">Terça</option>
+                        <option value="Qua">Quarta</option>
+                        <option value="Qui">Quinta</option>
+                        <option value="Sex">Sexta</option>
+                        <option value="Sab">Sábado</option>
+                        <option value="Dom">Domingo</option>
+                    </select>
+                    <select id="turma-turno" required>
+                        <option value="" disabled selected>Turno</option>
+                        <option value="M">Manhã</option>
+                        <option value="T">Tarde</option>
+                        <option value="N">Noite</option>
+                    </select>
                 </div>
-            </section>
-        </div>
+                <button type="submit" class="file-label">Salvar Turma</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Turmas Manuais Cadastradas</h2>
+            <div id="lista-turmas-container" class="resultado-lista">
+                <p>Carregando turmas do Firebase...</p>
+            </div>
+        </section>
         
     </main>
     
-    <!-- ============================================== -->
-    <!-- CONFIGURAÇÃO DO FIREBASE (SÓ UM BLOCO)       -->
-    <!-- ============================================== -->
-    <script type="module">
-        // Importações do Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // =======================================================================
-        // ATENÇÃO: COLOQUE A SUA CONFIGURAÇÃO DO FIREBASE AQUI
-        // (A mesma que você usa no planilha.html)
-        // =======================================================================
-        const firebaseConfig = {
-            apiKey: "SUA_API_KEY",
-            authDomain: "SEU_PROJETO.firebaseapp.com",
-            projectId: "SEU_PROJETO_ID",
-            storageBucket: "SEU_PROJETO.appspot.com",
-            messagingSenderId: "SEU_SENDER_ID",
-            appId: "SUA_APP_ID"
-        };
-        
-        const appId = firebaseConfig.projectId || 'default-app-id';
-        
-        try {
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-            setLogLevel('Debug'); 
-
-            await signInAnonymously(auth);
-
-            // Disponibiliza o DB para o script.js
-            window.firebaseDB = db;
-            window.firebaseAppId = appId;
-            
-            // Avisa que o Firebase está pronto
-            document.dispatchEvent(new Event('firebase-ready'));
-
-        } catch (e) {
-            console.error("Erro ao inicializar o Firebase:", e);
-            alert("ERRO CRÍTICO: Não foi possível conectar ao Firebase. Verifique a sua 'firebaseConfig'.");
-        }
-    </script>
-    
-    <!-- 3. O Cérebro da página (salas, turmas E abas) -->
     <script type="module" src="cadastros.js"></script>
 
 </body>

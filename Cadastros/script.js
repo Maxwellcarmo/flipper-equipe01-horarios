@@ -9,7 +9,10 @@ import {
     query
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-// Espera o evento 'firebase-ready' (do HTML)
+// ==============================================
+// LÓGICA DO FIREBASE
+// (Todo o código das abas foi removido)
+// ==============================================
 document.addEventListener('firebase-ready', () => {
     
     // Pega as variáveis globais do Firebase
@@ -23,28 +26,7 @@ document.addEventListener('firebase-ready', () => {
     }
 
     // ==============================================
-    // LÓGICA DAS ABAS (TABS)
-    // ==============================================
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetTab = button.dataset.tab; // ex: "tab-salas"
-
-            // Remove 'active' de todos
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            // Adiciona 'active' ao clicado e ao conteúdo correspondente
-            button.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-        });
-    });
-
-    // ==============================================
     // LÓGICA DE CADASTRO DE SALAS
-    // (Baseado no seu cadastro-salas.js)
     // ==============================================
     
     // Define o caminho da coleção de "salas"
@@ -107,7 +89,6 @@ document.addEventListener('firebase-ready', () => {
 
     // ==============================================
     // LÓGICA DE CADASTRO DE TURMAS
-    // (Baseado no seu cadastro-turmas.js)
     // ==============================================
 
     // Define o caminho da coleção de "turmas"
